@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from app.models import *
 from django.db.models.functions import Length
+from django.db.models import Q #1st import Q-objects from models
 
 def display_topics(request):
     #defaultly my data will be order in the form of Insertion Order, Bcz which way we will insert data like that only dispaly the all data
@@ -43,6 +44,17 @@ def display_webpages(request):
     QLWO=Webpage.objects.filter(id__gte='3')
     QLWO=Webpage.objects.filter(id__lt='1')
     QLWO=Webpage.objects.filter(id__lte='2')
+
+    #By using Q-objects checking multiple conditions like ename='smith',sal=100,deptno in(10,30)-----
+    #1st import Q-objects from models---->from django.db.models import Q
+    QLWO=Webpage.objects.all()
+    QLWO=Webpage.objects.filter(Q(topic_name='Cricket') & Q(name='Dhoni'))
+    #for and opertor in django by using symbol & or comma(,)
+    QLWO=Webpage.objects.filter(topic_name='Cricket',name='Dhoni')
+    QLWO=Webpage.objects.filter(Q(topic_name='Cricket') | Q(name='Dhoni'))
+    QLWO=Webpage.objects.filter(Q(name__startswith='r') | Q(name__endswith='T'))
+    QLWO=Webpage.objects.filter(Q(name__startswith='r') & Q(name__endswith='T'))
+    QLWO=Webpage.objects.filter(Q(url__endswith='in') & Q(name__endswith='T') | Q(email__startswith='INDIA'))
 
     d={'webpages':QLWO}
     return render(request,'display_webpages.html',d)
