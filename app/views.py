@@ -28,7 +28,7 @@ def display_topics(request):
     d={'topics':QLTO}
     return render(request,'display_topics.html',d)
 
-
+    
 def display_webpages(request):
     #defaultly my data will be order in the form of Insertion Order, Bcz which way we will insert data like that only dispaly the all data
     QLWO=Webpage.objects.all()
@@ -68,3 +68,4 @@ def display_access(request):
 
     d={'access':QLAO}
     return render(request,'display_access.html',d)
+  
